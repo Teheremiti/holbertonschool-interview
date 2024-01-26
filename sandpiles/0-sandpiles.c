@@ -1,13 +1,14 @@
 #include <stdio.h>
 
 /**
- * print_grid - Print 3x3 grid
- * @grid: 3x3 grid
- *
+ * print_grid - Print 3x3 grid.
+ * @grid: 3x3 grid.
+ * Return: Nothing.
  */
 
 void print_sandpile(int grid[3][3]) {
     int i, j;
+
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
             if (j)
@@ -27,9 +28,11 @@ void print_sandpile(int grid[3][3]) {
 void stabilize_sandpile(int grid[3][3]) {
     int stable = 0;
     while (!stable) {
+        int i, j;
+
         stable = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
                 if (grid[i][j] > 3) {
                     stable = 0;
                     break;
@@ -39,10 +42,12 @@ void stabilize_sandpile(int grid[3][3]) {
                 break;
         }
         if (!stable) {
+            int i, j;
+
             printf("=\n");
             print_sandpile(grid);
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
+            for (i = 0; i < 3; i++) {
+                for (j = 0; j < 3; j++) {
                     if (grid[i][j] > 3) {
                         grid[i][j] -= 4;
                         if (i > 0)
@@ -70,8 +75,9 @@ void stabilize_sandpile(int grid[3][3]) {
  */
 
 void sandpiles_sum(int grid1[3][3], int grid2[3][3]) {
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    int i, j;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
             grid1[i][j] += grid2[i][j];
         }
     }
