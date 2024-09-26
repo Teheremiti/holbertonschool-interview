@@ -8,18 +8,18 @@
 
 void print_sandpile(int grid[3][3])
 {
-    int i, j;
+	int i, j;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (j)
-                printf(" ");
-            printf("%d", grid[i][j]);
-        }
-        printf("\n");
-    }
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (j)
+				printf(" ");
+			printf("%d", grid[i][j]);
+		}
+		printf("\n");
+	}
 }
 
 /**
@@ -30,17 +30,17 @@ void print_sandpile(int grid[3][3])
 
 int is_stable(int grid[3][3])
 {
-    int i, j;
+	int i, j;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (grid[i][j] > 3)
-                return false;
-        }
-    }
-    return true;
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (grid[i][j] > 3)
+				return false;
+		}
+	}
+	return true;
 }
 
 /**
@@ -51,32 +51,32 @@ int is_stable(int grid[3][3])
 
 void stabilize_sandpile(int grid[3][3], int grid_tmp[3][3])
 {
-    while (!is_stable(grid))
-    {
-        int i, j;
+	while (!is_stable(grid))
+	{
+		int i, j;
 
-        printf("=\n");
-        print_sandpile(grid);
-        for (i = 0; i < 3; i++)
-        {
-            for (j = 0; j < 3; j++)
-            {
-                if (grid[i][j] > 3)
-                {
-                    grid[i][j] -= 4;
-                    if (i > 0)
-                        grid_tmp[i - 1][j]++;
-                    if (i < 2)
-                        grid_tmp[i + 1][j]++;
-                    if (j > 0)
-                        grid_tmp[i][j - 1]++;
-                    if (j < 2)
-                        grid_tmp[i][j + 1]++;
-                }
-            }
-        }
-        sandpiles_sum(grid, grid_tmp);
-    }
+		printf("=\n");
+		print_sandpile(grid);
+		for (i = 0; i < 3; i++)
+		{
+			for (j = 0; j < 3; j++)
+			{
+				if (grid[i][j] > 3)
+				{
+					grid[i][j] -= 4;
+					if (i > 0)
+						grid_tmp[i - 1][j]++;
+					if (i < 2)
+						grid_tmp[i + 1][j]++;
+					if (j > 0)
+						grid_tmp[i][j - 1]++;
+					if (j < 2)
+						grid_tmp[i][j + 1]++;
+				}
+			}
+		}
+		sandpiles_sum(grid, grid_tmp);
+	}
 }
 
 /**
@@ -90,16 +90,16 @@ void stabilize_sandpile(int grid[3][3], int grid_tmp[3][3])
 
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-    int i, j;
-    int grid_tmp[3][3];
+	int i, j;
+	int grid_tmp[3][3];
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            grid1[i][j] += grid2[i][j];
-            grid_tmp[i][j] = 0;
-        }
-    }
-    stabilize_sandpile(grid1, grid_tmp);
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			grid1[i][j] += grid2[i][j];
+			grid_tmp[i][j] = 0;
+		}
+	}
+	stabilize_sandpile(grid1, grid_tmp);
 }
