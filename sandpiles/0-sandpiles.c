@@ -1,7 +1,7 @@
 #include "sandpiles.h"
 
 /**
- * print_grid - Print 3x3 grid.
+ * print_sandpile - Print 3x3 grid.
  * @grid: 3x3 grid.
  * Return: Nothing.
  */
@@ -46,6 +46,7 @@ int is_stable(int grid[3][3])
 /**
  * stabilize_sandpile - Stabilize a sandpile.
  * @grid: Input sandpile.
+ * @grid_tmp: 3x3 grid.
  * Return: Nothing.
  */
 
