@@ -16,7 +16,7 @@ def canUnlockAll(boxes):
     keys = set(boxes[0])
     for i in range(1, len(boxes)):
         keys |= set(boxes[i]).union(*(set(boxes[key]) for key in boxes[i]
-                                      if key <= len(boxes)))
+                                      if key < len(boxes)))
         if i not in keys:
             return False
 
