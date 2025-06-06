@@ -1,23 +1,34 @@
 #!/usr/bin/python3
-""" Lockboxes """
+"""Lockboxes"""
+
 
 def canUnlockAll(boxes):
     """
-    There are n locked boxes, each numbered sequentially from 0 to n - 1.
-    Each box may contain keys to the other boxes.
-    Determines if all the boxes can be opened.
+    Determine if all boxes can be opened.
 
     Args:
-        boxes (list[list[int]]): Exactly what it sounds like.
+    boxes (list[]): A list where each element is a list of keys contained in
+    that box. Box i contains keys that can open other boxes.
 
     Returns:
-        boolean: True if all boxes can be opened, otherwise False.
-    """
-    keys = set(boxes[0])
-    for i in range(1, len(boxes)):
-        keys |= set(boxes[i]).union(*(set(boxes[key]) for key in boxes[i]
-                                      if key < len(boxes)))
-        if i not in keys:
-            return False
+    bool: True if all boxes can be opened, False otherwise.
 
-    return True
+    The first box (boxes[0]) is always unlocked. A key with the same number
+    as a box opens that box. Keys can be positive integers and there can be
+    keys that don't correspond to any box.
+    """
+    if not boxes:
+        return True
+
+    n = len(boxes)
+    unlocked = set([0])
+    keys_to_check = [0]
+
+    while keys_to_check:
+        current_box = keys_to_check.pop(0)
+        for key in boxes[current_box]:
+            if 0 <= key < n and key not in unlocked:
+                unlocked.add(key)
+                keys_to_check.append(key)
+
+    return len(unlocked) == n
