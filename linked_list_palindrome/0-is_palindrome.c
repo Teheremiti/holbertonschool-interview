@@ -2,6 +2,30 @@
 #include <stdlib.h>
 
 /**
+ * check_palindrome_recursive - helper function to check palindrome recursively
+ * @left: pointer to pointer of left node (moves forward)
+ * @right: pointer to right node (moves backward via recursion)
+ *
+ * Return: 1 if palindrome, 0 if not
+ */
+int check_palindrome_recursive(listint_t **left, listint_t *right)
+{
+	/* Base case: reached end of list */
+	if (right == NULL)
+		return (1);
+
+	if (!check_palindrome_recursive(left, right->next))
+		return (0);
+
+	if ((*left)->n != right->n)
+		return (0);
+
+	*left = (*left)->next;
+
+	return (1);
+}
+
+/**
  * is_palindrome - checks if a singly linked list is a palindrome
  * @head: pointer to pointer of first node of listint_t list
  *
@@ -9,46 +33,11 @@
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *current;
-	int *values;
-	int count = 0, i;
+	listint_t *left;
 
 	if (head == NULL || *head == NULL)
 		return (1); /* Empty list is considered a palindrome */
 
-	/* First pass: count the number of nodes */
-	current = *head;
-	while (current != NULL)
-	{
-		count++;
-		current = current->next;
-	}
-
-	/* Allocate array to store values */
-	values = malloc(sizeof(int) * count);
-	if (values == NULL)
-		return (0);
-
-	/* Second pass: store all values in the array */
-	current = *head;
-	i = 0;
-	while (current != NULL)
-	{
-		values[i] = current->n;
-		current = current->next;
-		i++;
-	}
-
-	/* Check if the array is a palindrome */
-	for (i = 0; i < count / 2; i++)
-	{
-		if (values[i] != values[count - 1 - i])
-		{
-			free(values);
-			return (0);
-		}
-	}
-
-	free(values);
-	return (1);
+	left = *head;
+	return (check_palindrome_recursive(&left, *head));
 }
