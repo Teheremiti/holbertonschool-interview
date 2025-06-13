@@ -36,6 +36,7 @@ static void counting_sort_radix(int *array, size_t size, int exp)
 	int *output, *count;
 	size_t i;
 	int j;
+
 	output = malloc(sizeof(int) * size);
 	count = malloc(sizeof(int) * 10);
 	if (!output || !count)
