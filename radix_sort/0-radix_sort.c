@@ -36,44 +36,38 @@ static void counting_sort_radix(int *array, size_t size, int exp)
 	int *output, *count;
 	size_t i;
 	int j;
-
 	output = malloc(sizeof(int) * size);
 	count = malloc(sizeof(int) * 10);
-
 	if (!output || !count)
 	{
 		free(output);
 		free(count);
 		return;
 	}
-
 	/* Initialize count array */
 	for (j = 0; j < 10; j++)
 		count[j] = 0;
-
 	/* Store count of occurrences in count[] */
 	for (i = 0; i < size; i++)
 		count[(array[i] / exp) % 10]++;
-
-	/* Change count[i] so that count[i] now contains actual
+	/*
+	 * Change count[i] so that count[i] now contains actual
 	 * position of this digit in output[]
 	 */
 	for (j = 1; j < 10; j++)
 		count[j] += count[j - 1];
-
 	/* Build the output array */
 	for (i = size - 1; (int)i >= 0; i--)
 	{
 		output[count[(array[i] / exp) % 10] - 1] = array[i];
 		count[(array[i] / exp) % 10]--;
 	}
-
-	/* Copy the output array to array[], so that array[] now
+	/*
+	 * Copy the output array to array[], so that array[] now
 	 * contains sorted numbers according to current digit
 	 */
 	for (i = 0; i < size; i++)
 		array[i] = output[i];
-
 	free(output);
 	free(count);
 }
@@ -93,7 +87,8 @@ void radix_sort(int *array, size_t size)
 
 	max = get_max(array, size);
 
-	/* Do counting sort for every digit. Note that instead
+	/*
+	 * Do counting sort for every digit. Note that instead
 	 * of passing digit number, exp is passed. exp is 10^i
 	 * where i is current digit number
 	 */
