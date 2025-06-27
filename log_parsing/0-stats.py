@@ -16,6 +16,7 @@ def print_stats(total_size, status_counts):
 
 def signal_handler(sig, frame):
     """Handle keyboard interrupt (CTRL+C)"""
+    global total_size, status_counts
     print_stats(total_size, status_counts)
     sys.exit(0)
 
