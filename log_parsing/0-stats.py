@@ -24,17 +24,26 @@ def signal_handler(sig, frame):
 if __name__ == "__main__":
     # Initialize variables
     total_size = 0
-    status_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+    status_counts = {
+        200: 0,
+        301: 0,
+        400: 0,
+        401: 0,
+        403: 0,
+        404: 0,
+        405: 0,
+        500: 0
+    }
     line_count = 0
 
     # Set up signal handler for CTRL+C
     signal.signal(signal.SIGINT, signal_handler)
 
     # Regular expression to match the log format
-    # <IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
-    log_pattern = re.compile(
-        r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$'
-    )
+# <IPAddress> - [<date>] "GET /projects/260 HTTP/1.1" <statuscode> <filesize>
+    ip_and_date_pattern = r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[.*\] '
+    request_pattern = r'"GET /projects/260 HTTP/1\.1" (\d+) (\d+)'
+    log_pattern = re.compile(ip_and_date_pattern + request_pattern)
 
     try:
         for line in sys.stdin:
