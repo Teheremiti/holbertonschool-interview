@@ -24,13 +24,16 @@ static void slide_left(int *line, size_t size)
 	}
 
 	/* Merge adjacent identical elements */
-	for (i = 0; i < temp_size - 1; i++)
+	if (temp_size > 1)
 	{
-		if (temp[i] == temp[i + 1])
+		for (i = 0; i < temp_size - 1; i++)
 		{
-			temp[i] *= 2;
-			temp[i + 1] = 0;
-			i++; /* Skip next element as it's been merged */
+			if (temp[i] == temp[i + 1])
+			{
+				temp[i] *= 2;
+				temp[i + 1] = 0;
+				i++; /* Skip next element as it's been merged */
+			}
 		}
 	}
 
