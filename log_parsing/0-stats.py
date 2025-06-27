@@ -67,3 +67,6 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         print_stats(total_size, status_counts)
+
+    # Print final stats when stdin ends
+    print_stats(total_size, status_counts)
