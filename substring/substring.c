@@ -79,7 +79,37 @@ static int is_valid(char const *s, char const **words, int nb_words,
 }
 
 /**
- * find_substring - Finds all starting indices of substrings containing all words.
+ * scan_substrings - Scans string for valid concatenations.
+ * @s: The string to scan.
+ * @words: The array of words.
+ * @nb_words: Number of words in the array.
+ * @word_len: Length of each word.
+ * @len_s: Length of @s.
+ * @used: Auxiliary array to mark used words.
+ * @indices: Output array for indices, or NULL to only count.
+ *
+ * Return: Number of valid substrings found.
+ */
+static int scan_substrings(char const *s, char const **words, int nb_words,
+	int word_len, int len_s, int *used, int *indices)
+{
+	int i, count = 0, total_len = word_len * nb_words;
+
+	for (i = 0; i <= len_s - total_len; i++)
+	{
+		if (is_valid(s, words, nb_words, word_len, i, used))
+		{
+			if (indices)
+				indices[count] = i;
+			count++;
+		}
+	}
+	return (count);
+}
+
+/**
+ * find_substring - Finds all starting indices of substrings containing all
+ * words exactly once.
  * @s: The string to scan.
  * @words: The array of words.
  * @nb_words: Number of elements in @words.
@@ -93,54 +123,34 @@ int *find_substring(char const *s, char const **words,
 	int *indices = NULL;
 	int *used;
 	int len_s, word_len, total_len;
-	int i, count = 0;
+	int count;
 
 	if (!s || !words || !n || nb_words <= 0)
 		return (NULL);
-
 	*n = 0;
 	len_s = _strlen(s);
 	word_len = _strlen(words[0]);
 	if (word_len == 0)
 		return (NULL);
-
 	total_len = word_len * nb_words;
 	if (total_len > len_s)
 		return (NULL);
-
 	used = malloc(sizeof(int) * nb_words);
 	if (!used)
 		return (NULL);
-
-	for (i = 0; i <= len_s - total_len; i++)
-	{
-		if (is_valid(s, words, nb_words, word_len, i, used))
-			count++;
-	}
-
+	count = scan_substrings(s, words, nb_words, word_len, len_s, used, NULL);
 	if (count == 0)
 	{
 		free(used);
 		return (NULL);
 	}
-
 	indices = malloc(sizeof(int) * count);
 	if (!indices)
 	{
 		free(used);
 		return (NULL);
 	}
-
-	count = 0;
-	for (i = 0; i <= len_s - total_len; i++)
-	{
-		if (is_valid(s, words, nb_words, word_len, i, used))
-		{
-			indices[count] = i;
-			count++;
-		}
-	}
-
+	count = scan_substrings(s, words, nb_words, word_len, len_s, used, indices);
 	free(used);
 	*n = count;
 	return (indices);
