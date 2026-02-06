@@ -12,3 +12,11 @@ Write a function `binary_tree_node` that creates a new binary tree node:
 - The `parent` pointer is set to the node passed as argument.
 - The `left` and `right` children are initialized to `NULL`.
 - The function returns a pointer to the new node, or `NULL` on failure.
+
+**Task 1: Insert node**
+
+Write a function `heap_insert` that inserts a value into a Max Binary Heap:
+- **Prototype**: `heap_t *heap_insert(heap_t **root, int value);`
+- The new node is inserted at the correct position in the heap.
+- The heap is reorganized to maintain the max heap property.
+- The function returns a pointer to the new node, or `NULL` on failure.
